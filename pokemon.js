@@ -1,3 +1,4 @@
+const fetch = require("node-fetch")
 // Create an arena that displays two Pokemon battling each other.
 // Compare the two to see who is likely to win.
 
@@ -25,21 +26,15 @@
 // access moves (bubble) (ember)
 // find a way to switch turns
 // create an input for the pokemon to attack
-let url
-
-let pokemonObj1
-let pokemonObj2
 
 const definePokemon = (pokemon) => {
-  url = `https://pokeapi.co/api/v2/pokemon/ditto`
-}
-
-const getPokemon = () => {
+  let url = `https://pokeapi.co/api/v2/pokemon/${pokemon}`
   fetch(url)
     .then((res) => res.json())
-    .then((users) => (pokemonObj1 = users))
+    .then((specificPokemon) => {
+      return specificPokemon.types[0].type.name
+    })
 }
-console.log(pokemonObj1)
 
 // const getPokemon2 = () => {
 //   fetch(url)
@@ -55,44 +50,44 @@ const rl = readline.createInterface({
 })
 
 const comparePokemon = (pokemon1, pokemon2) => {
-  // let cleanWord = word.toLowerCase().trim()
-  if (pokemon1 == "fire" && pokemon2 == "water") {
+  if (pokemon1 === "fire" && pokemon2 === "water") {
     return "water wins"
   }
-  if (pokemon1 == "fire" && pokemon2 == "grass") {
+  if (pokemon1 === "fire" && pokemon2 === "grass") {
     return "fire wins"
   }
-  if (pokemon1 == "fire" && pokemon2 == "fire") {
+  if (pokemon1 === "fire" && pokemon2 === "fire") {
     return "tie"
   }
-  if (pokemon1 == "water" && pokemon2 == "water") {
+  if (pokemon1 === "water" && pokemon2 === "water") {
     return "tie"
   }
-  if (pokemon1 == "water" && pokemon2 == "grass") {
+  if (pokemon1 === "water" && pokemon2 === "grass") {
     return "grass wins"
   }
-  if (pokemon1 == "water" && pokemon2 == "fire") {
+  if (pokemon1 === "water" && pokemon2 === "fire") {
     return "water wins"
   }
-  if (pokemon1 == "grass" && pokemon2 == "fire") {
+  if (pokemon1 === "grass" && pokemon2 === "fire") {
     return "fire wins"
   }
-  if (pokemon1 == "grass" && pokemon2 == "water") {
+  if (pokemon1 === "grass" && pokemon2 === "water") {
     return "grass wins"
   }
-  if (pokemon1 == "grass" && pokemon2 == "grass") {
+  if (pokemon1 === "grass" && pokemon2 === "grass") {
     return "tie"
   }
 }
 
 const createArena = () => {
+
   rl.question("Player 1, choose your Pokemon: ", (pokemon1) => {
-    definePokemon(pokemon1)
-    console.log(pokemon1)
-    console.log(url)
-    console.log(pokemonObj1)
+    let firstPokemon = definePokemon(pokemon1)
+    console.log(firstPokemon)
+
     rl.question("Player 2, choose your Pokemon: ", (pokemon2) => {
-      console.log(comparePokemon(pokemon1, pokemon2))
+      let secondPokemon = definePokemon(pokemon2)
+      console.log(comparePokemon(firstPokemon, secondPokemon))
       createArena()
     })
   })

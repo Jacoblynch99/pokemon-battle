@@ -1,18 +1,13 @@
 const fetch = require("node-fetch")
 
-let pokemonTypes
-
 const definePokemon = (pokemon) => {
   let url = `https://pokeapi.co/api/v2/pokemon/${pokemon}`
   fetch(url)
     .then((res) => res.json())
     .then((specificPokemon) => {
-      console.log('line 10')
-      pokemonTypes = specificPokemon.types[0].type.name
+      const pokemonType = specificPokemon.types[0].type.name
+      return pokemonType
     })
 }
 
-definePokemon(10)
-
-
-console.log(pokemonTypes)
+console.log(definePokemon("zubat"))
