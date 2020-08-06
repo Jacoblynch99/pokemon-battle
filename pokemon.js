@@ -1,10 +1,10 @@
 const fetch = require("node-fetch")
 
-const readline = require('readline');
+const readline = require("readline")
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout
-});
+  output: process.stdout,
+})
 // Create an arena that displays two Pokemon battling each other.
 // Compare the two to see who is likely to win.
 
@@ -64,6 +64,8 @@ const comparePokemon = (pokemon1, pokemon2) => {
     if (pokemon1 === "grass" && pokemon2 === "grass") {
       return "tie"
     }
+  } else {
+    return "proccesing"
   }
 }
 
@@ -76,21 +78,14 @@ const definePokemon = (pokemon) => {
       console.log(comparePokemon(pokemonArr[0], pokemonArr[1]))
     })
 }
-// const getPokemon2 = () => {
-//   fetch(url)
-//     .then((res) => res.json())
-//     .then((users) => (pokemonObj2 = users))
-// }
-
-
 
 const createArena = () => {
   rl.question("Player 1, choose your Pokemon: ", (pokemon1) => {
-    definePokemon(pokemon1)
-  })
-  rl.question("Player 2, choose your Pokemon: ", (pokemon2) => {
-    definePokemon(pokemon2)
+    rl.question("Player 2, choose your Pokemon: ", (pokemon2) => {
+      definePokemon(pokemon1) // create a class constructor that can hold lvl, type, name, sprite
+      definePokemon(pokemon2) // async await to run definePokemon once
+    })
     createArena()
   })
 }
-console.log(createArena())
+createArena()
